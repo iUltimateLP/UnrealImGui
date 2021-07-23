@@ -389,7 +389,7 @@ void SImGuiWidget::TakeFocus()
 	{
 		TSharedRef<SWidget> FocusWidget = SharedThis(this);
 		LocalPlayer->GetSlateOperations().CaptureMouse(FocusWidget);
-		LocalPlayer->GetSlateOperations().SetUserFocus(FocusWidget);
+		//LocalPlayer->GetSlateOperations().SetUserFocus(FocusWidget);
 	}
 	else
 	{
