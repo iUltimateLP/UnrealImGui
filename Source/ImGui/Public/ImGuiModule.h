@@ -168,6 +168,9 @@ public:
 	// Needed for Nexus so we can notify when the widget wants to remove mouse focus (because LeftAlt was released)
 	FOnRemoveMouseFocus OnRemoveMouseFocus;
 
+	// Whether any ImGui item is currently active (somehow the original ImGui::IsAnyItemActive won't work)
+	virtual bool IsAnyItemActive(const UWorld* World);
+
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;

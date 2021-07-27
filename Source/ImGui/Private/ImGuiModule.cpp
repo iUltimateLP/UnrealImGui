@@ -98,6 +98,12 @@ void FImGuiModule::ReleaseTexture(const FImGuiTextureHandle& Handle)
 	}
 }
 
+bool FImGuiModule::IsAnyItemActive(const UWorld* World)
+{
+	// Just don't ask...
+	return ImGuiModuleManager->GetContextManager().GetWorldContextProxy(*World).HasActiveItem();
+}
+
 void FImGuiModule::StartupModule()
 {
 	// Initialize handles to allow cross-module redirections. Other handles will always look for parents in the active
