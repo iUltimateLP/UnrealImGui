@@ -2,7 +2,7 @@
 
 #include "SImGuiWidget.h"
 #include "SImGuiCanvasControl.h"
-
+#include "ImGuiModule.h"
 #include "ImGuiContextManager.h"
 #include "ImGuiContextProxy.h"
 #include "ImGuiInputHandler.h"
@@ -166,7 +166,18 @@ FReply SImGuiWidget::OnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& Key
 FReply SImGuiWidget::OnKeyUp(const FGeometry& MyGeometry, const FKeyEvent& KeyEvent)
 {
 	UpdateCanvasControlMode(KeyEvent);
-	return InputHandler->OnKeyUp(KeyEvent);
+
+	// If LeftAlt has been released, we need to hide the ImGui 
+	if (KeyEvent.GetKey() == EKeys::LeftAlt)
+	{
+		// Call the delegate
+		FImGuiModule::Get().OnRemoveMouseFocus.ExecuteIfBound();
+		return FReply::Handled();
+	}
+	else
+	{
+		return InputHandler->OnKeyUp(KeyEvent);
+	}
 }
 
 FReply SImGuiWidget::OnAnalogValueChanged(const FGeometry& MyGeometry, const FAnalogInputEvent& AnalogInputEvent)
@@ -389,7 +400,7 @@ void SImGuiWidget::TakeFocus()
 	{
 		TSharedRef<SWidget> FocusWidget = SharedThis(this);
 		LocalPlayer->GetSlateOperations().CaptureMouse(FocusWidget);
-		//LocalPlayer->GetSlateOperations().SetUserFocus(FocusWidget);
+		LocalPlayer->GetSlateOperations().SetUserFocus(FocusWidget);
 	}
 	else
 	{

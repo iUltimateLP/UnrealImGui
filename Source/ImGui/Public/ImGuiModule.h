@@ -5,12 +5,14 @@
 #include "ImGuiDelegates.h"
 #include "ImGuiModuleProperties.h"
 #include "ImGuiTextureHandle.h"
-
 #include <Modules/ModuleManager.h>
 
 #define IMGUI_FONT_DEFAULT 0
 #define IMGUI_FONT_ROBOTO 1
 #define IMGUI_FONT_ROBOTO_BIG 2
+
+// Needed for Nexus so we can notify when the widget wants to remove mouse focus (because LeftAlt was released)
+DECLARE_DELEGATE(FOnRemoveMouseFocus);
 
 class FImGuiModule : public IModuleInterface
 {
@@ -162,6 +164,9 @@ public:
 	 * Toggle ImGui Demo (changes ImGui.ShowDemo console variable).
 	 */
 	virtual void ToggleShowDemo();
+
+	// Needed for Nexus so we can notify when the widget wants to remove mouse focus (because LeftAlt was released)
+	FOnRemoveMouseFocus OnRemoveMouseFocus;
 
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
